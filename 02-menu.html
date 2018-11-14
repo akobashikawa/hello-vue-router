@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Router HelloWorld</title>
+    <style>
+        .router-link-exact-active {
+            background-color: blue;
+            color: white;
+        }
+    </style>
+</head>
+
+<body>
+    <!--
+        IDEA:
+        - La clase router-link-exact-active se aplica al router-link correspondiente
+        - La clase router-link-active se aplica a los router-link cuyo path calce con el actual
+    -->
+    <div id="app">
+        <div class="menu">
+            <a href="#" @click="goBack">&lt; Back</a>
+            <router-link to="/">Home</router-link>
+            <router-link to="page-1">Page 1</router-link>
+            <router-link to="page-2">Page 2</router-link>
+        </div>
+
+        <router-view></router-view>
+    </div>
+
+    <script src="https://unpkg.com/vue/dist/vue.js"></script>
+    <script src="https://unpkg.com/vue-router/dist/vue-router.js"></script>
+
+    <script>
+        const Home = {
+            template: `<div>
+                <h1>Home</h1>
+            </div>`
+        };
+        const Page1 = {
+            template: `<div>
+                <h1>Page 1</h1>
+            </div>`
+        };
+        const Page2 = {
+            template: `<div>
+                <h1>Page 2</h1>
+            </div>`
+        };
+
+        const routes = [
+            { path: '/', component: Home },
+            { path: '/page-1', component: Page1 },
+            { path: '/page-2', component: Page2 },
+        ];
+
+        const router = new VueRouter({
+            routes
+        });
+
+        const app = new Vue({
+            router,
+            data: {
+            },
+            mounted: function () {
+            },
+            methods: {
+                goBack: function () {
+                    console.log('goBack');
+                    if (window.history.length > 1) {
+                        this.$router.go(-1);
+                    } else {
+                        this.$router.go('/');
+                    }
+                }
+            }
+        }).$mount('#app');
+    </script>
+</body>
+
+</html>

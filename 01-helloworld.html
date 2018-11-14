@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Router HelloWorld</title>
+</head>
+
+<body>
+    <!--
+        IDEA:
+        - La app tiene la propiedad router, que guarda una instancia de VueRouter
+        - El router se define como una lista de routes
+        - Cada route tiene un path y un component
+        - La visualización del route en curso aparece dentro de la etiqueta router-view
+        - La etiqueta router-link crea un enlace al path especificado, con la etiqueta especificada
+        - Se puede acceder al router con this.$router
+        - Se puede acceder al route en curso con this.$route
+    -->
+    <div id="app">
+        <div class="menu">
+            <router-link to="/">Home</router-link>
+            <router-link to="page-1">Page 1</router-link>
+            <router-link to="page-2">Page 2</router-link>
+        </div>
+
+        <p>{{message}}</p>
+
+        <router-view></router-view>
+    </div>
+
+    <script src="https://unpkg.com/vue/dist/vue.js"></script>
+    <script src="https://unpkg.com/vue-router/dist/vue-router.js"></script>
+
+    <script>
+        const Home = {
+            template: `<div>
+                <h1>Home</h1>
+            </div>`
+        };
+        const Page1 = {
+            template: `<div>
+                <h1>Page 1</h1>
+            </div>`
+        };
+        const Page2 = {
+            template: `<div>
+                <h1>Page 2</h1>
+            </div>`
+        };
+
+        const routes = [
+            { path: '/', component: Home },
+            { path: '/page-1', component: Page1 },
+            { path: '/page-2', component: Page2 },
+        ];
+
+        const router = new VueRouter({
+            routes
+        });
+
+        const app = new Vue({
+            router,
+            data: {
+                message: 'Hi!'
+            },
+            mounted: function () {
+                console.log('mounted');
+                this.hello();
+            },
+            methods: {
+                hello: function () {
+                    console.log('hello');
+                }
+            }
+        }).$mount('#app');
+    </script>
+</body>
+
+</html>
